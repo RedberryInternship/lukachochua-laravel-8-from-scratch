@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
-use app\http\Controllers\SessionsController;
+use App\Http\Controllers\SessionsController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -27,7 +27,9 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']);
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
 
-Route::get('login', 'App\Http\Controllers\SessionsController@create')->middleware('guest');
+//Route::get('login', 'App\Http\Controllers\SessionsController@create')->middleware('guest');
+Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
+
 Route::post('sessions', 'App\Http\Controllers\SessionsController@store')->middleware('guest');
 Route::post('logout', 'App\Http\Controllers\SessionsController@destroy')->middleware('auth');
 
