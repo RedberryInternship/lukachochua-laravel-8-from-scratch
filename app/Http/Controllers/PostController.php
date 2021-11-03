@@ -6,6 +6,7 @@ use App\Models\Post;
 use Attribute;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
@@ -17,7 +18,7 @@ class PostController extends Controller
             'posts' => Post::latest()->filter(
                 request(['search', 'category', 'author'])
             )->paginate(6)->withQuerystring()
-        ]); 
+        ]);
     }
 
     public function show(Post $post)
