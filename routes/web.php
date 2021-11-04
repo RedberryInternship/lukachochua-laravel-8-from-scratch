@@ -45,16 +45,16 @@ Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth'
 
 //admin
 
-Route::middleware('can:admin')->group(function(){
+Route::middleware('can:admin')->group(function () {
     Route::resource('admin/posts', AdminPostController::class)->except('show');
     
-  /*  Route::post('admin/posts', [AdminPostController::class, 'store']);
-    Route::get('admin/posts/create', [AdminPostController::class, 'create']);
+    /*Route::post('admin/posts', [AdminPostController::class, 'store']);
+      Route::get('admin/posts/create', [AdminPostController::class, 'create']);
 
-    Route::get('admin/posts', [AdminPostController::class, 'index']);
-    Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit']);
-    Route::patch('admin/posts/{post}', [AdminPostController::class, 'update']);
-    Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy']); */
+      Route::get('admin/posts', [AdminPostController::class, 'index']);
+      Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit']);
+      Route::patch('admin/posts/{post}', [AdminPostController::class, 'update']);
+      Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy']); */
 });
 
 
@@ -64,18 +64,17 @@ Route::middleware('can:admin')->group(function(){
 //Route::post('sessions', 'App\Http\Controllers\SessionsController@store')->middleware('guest');
 //Route::post('logout', 'App\Http\Controllers\SessionsController@destroy')->middleware('auth');
 
-/*Route::get('categories/{category:slug}', function (Category $category){ 
+/*Route::get('categories/{category:slug}', function (Category $category){
 
     return view('posts', [
         'posts' => $category->posts,
         'currentCategory' => $category,
         'categories' => Category::all()
-    ]); 
+    ]);
 })->name('category');
 
-Route::get('authors/{author:username}', function (User $author){ 
+Route::get('authors/{author:username}', function (User $author){
     return view('posts.index', [
         'posts' => $author->posts
-    ]); 
+    ]);
 }); */
-

@@ -27,7 +27,7 @@
                         @endphp
     
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }} 
+                            <option value="{{ $category->id }}" 
                                 {{ old('category_id', $post->category_id) == $category->id ? 'selected' : '' }}"
                                 >{{ ucwords($category->name) }}</option>    
                         @endforeach

@@ -1,0 +1,10 @@
+{
+
+    "[php]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "justyle.php-cs-fixer"
+    },
+
+    "php-cs-fixer-executable-Path":"${workspacefolder}/vendor/bin/php-cs-fixer",
+    "php-cs-fixer-config": "php-cs-fixer.php"
+}
