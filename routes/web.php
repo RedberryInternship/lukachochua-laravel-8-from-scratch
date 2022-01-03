@@ -6,14 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\NewsletterController;
-use App\Models\Category;
-use App\Models\Post;
-use App\Models\User;
-use App\Services\Newsletter;
-use Illuminate\Support\Facades\File;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Route;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,55 +19,21 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 |
 */
 
-
-
 Route::get('/', [PostController::class, 'index'])->name('home');
 
-Route::get('posts/{post:slug}', [PostController::class, 'show']);
-Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
+Route::get('posts/{post:slug}', [PostController::class, 'show'])->name('showPost');
+Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store'])->name('saveComment');
 
-Route::post('newsletter', NewsletterController::class);
+Route::post('newsletter', NewsletterController::class)->name('newsletter');
 
-Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
-Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
+Route::get('register', [RegisterController::class, 'create'])->middleware('guest')->name('registerPage');
+Route::post('register', [RegisterController::class, 'store'])->middleware('guest')->name('saveUser');
 
-Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
-Route::post('sessions', [SessionsController::class, 'store'])->middleware('guest');
+Route::get('login', [SessionsController::class, 'create'])->middleware('guest')->name('loginPage');
+Route::post('sessions', [SessionsController::class, 'store'])->middleware('guest')->name('loginUser');
 
-Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
-
-//admin
+Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth')->name('logout');
 
 Route::middleware('can:admin')->group(function () {
-    Route::resource('admin/posts', AdminPostController::class)->except('show');
-    
-    /*Route::post('admin/posts', [AdminPostController::class, 'store']);
-      Route::get('admin/posts/create', [AdminPostController::class, 'create']);
-
-      Route::get('admin/posts', [AdminPostController::class, 'index']);
-      Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit']);
-      Route::patch('admin/posts/{post}', [AdminPostController::class, 'update']);
-      Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy']); */
+	Route::resource('admin/posts', AdminPostController::class)->except('show');
 });
-
-
-
-
-
-//Route::post('sessions', 'App\Http\Controllers\SessionsController@store')->middleware('guest');
-//Route::post('logout', 'App\Http\Controllers\SessionsController@destroy')->middleware('auth');
-
-/*Route::get('categories/{category:slug}', function (Category $category){
-
-    return view('posts', [
-        'posts' => $category->posts,
-        'currentCategory' => $category,
-        'categories' => Category::all()
-    ]);
-})->name('category');
-
-Route::get('authors/{author:username}', function (User $author){
-    return view('posts.index', [
-        'posts' => $author->posts
-    ]);
-}); */
