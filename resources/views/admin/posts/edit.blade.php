@@ -22,9 +22,6 @@
                 <x-form-label name="category" />
 
                 <select name="category_id" id="category_id">
-                    @php
-                        $categories = \App\Models\Category::all();
-                    @endphp
 
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}"
