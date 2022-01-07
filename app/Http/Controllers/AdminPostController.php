@@ -7,7 +7,7 @@ use App\Models\Post;
 use Illuminate\Validation\Rule;
 
 class AdminPostController extends Controller
-{
+{	
 	public function index()
 	{
 		return view('admin.posts.index', [
@@ -18,7 +18,8 @@ class AdminPostController extends Controller
 	public function create()
 	{
 		$categories = Category::all();
-		return view('admin.posts.create');
+		return view('admin.posts.create', ['categories' => $categories]);
+		
 	}
 
 	public function store()
@@ -38,7 +39,8 @@ class AdminPostController extends Controller
 	public function edit(Post $post)
 	{
 		$categories = Category::all();
-		return view('admin.posts.edit', ['post' => $post]);
+
+		return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
 	}
 
 	public function update(Post $post)
@@ -57,6 +59,7 @@ class AdminPostController extends Controller
 
 	public function destroy(Post $post)
 	{
+
 		$post->delete();
 		return back()->with('success', 'Post Deleted!');
 	}
