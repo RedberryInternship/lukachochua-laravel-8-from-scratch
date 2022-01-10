@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Validation\Rule;
 
 class AdminPostController extends Controller
-{	
+{
 	public function index()
 	{
 		return view('admin.posts.index', [
@@ -19,21 +19,20 @@ class AdminPostController extends Controller
 	{
 		$categories = Category::all();
 		return view('admin.posts.create', ['categories' => $categories]);
-		
 	}
 
-	public function store()
+	public function store(PostRequest $request)
 	{
 		$post = new Post();
 
-		$attributes = $this->validatePost();
+		$attributes = $request->validated();
 
 		$attributes['user_id'] = auth()->id();
 		$attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
 
 		Post::create($attributes);
 
-		return redirect('/');
+		return redirect()->route('home');
 	}
 
 	public function edit(Post $post)
@@ -59,24 +58,7 @@ class AdminPostController extends Controller
 
 	public function destroy(Post $post)
 	{
-
 		$post->delete();
 		return back()->with('success', 'Post Deleted!');
-	}
-
-	protected function validatePost(?Post $post = null): array
-	{
-		$post ??= new Post();
-
-		$attributes = request()->validate([
-			'title'      => 'required',
-			'slug'       => ['required', Rule::unique('posts', 'slug')->ignore($post->id)],
-			'thumbnail'  => $post->exists ? ['image'] : ['required|image'],
-			'excerpt'    => 'required',
-			'body'       => 'required',
-			'category_id'=> ['required', Rule::exists('categories', 'id')],
-		]);
-
-		return $attributes;
 	}
 }

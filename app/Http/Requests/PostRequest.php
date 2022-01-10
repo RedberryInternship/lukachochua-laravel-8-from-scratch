@@ -30,7 +30,7 @@ class PostRequest extends FormRequest
         return [
             'title'      => 'required',
 			'slug'       => ['required', Rule::unique('posts', 'slug')->ignore($post->id)],
-			'thumbnail'  => $post->exists ? ['image'] : ['required|image'],
+			'thumbnail'  => $post->exists ? ['image'] : ['image'],
 			'excerpt'    => 'required',
 			'body'       => 'required',
 			'category_id'=> ['required', Rule::exists('categories', 'id')],

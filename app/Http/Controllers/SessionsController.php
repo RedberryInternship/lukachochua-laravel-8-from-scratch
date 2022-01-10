@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SessionRequest;
 use Illuminate\Support\Facades\Auth;
 
 class SessionsController extends Controller
@@ -11,17 +12,14 @@ class SessionsController extends Controller
 		return view('sessions.create');
 	}
 
-	public function store()
+	public function store(SessionRequest $request)
 	{
-		$attributes = request()->validate([
-			'email'    => 'required|email',
-			'password' => 'required',
-		]);
+		$attributes = $request->validated();
 
 		if (Auth::attempt($attributes))
 		{
 			session()->regenerate();
-			return redirect('/')->with('success', 'Welcome Back!');
+			return redirect()->route('home')->with('success', 'Welcome Back!');
 		}
 
 		return back()
@@ -33,6 +31,6 @@ class SessionsController extends Controller
 	{
 		Auth::logout();
 
-		return redirect('/')->with('success', 'Goodbye!');
+		return redirect()->route('home')->with('success', 'Goodbye!');
 	}
 }

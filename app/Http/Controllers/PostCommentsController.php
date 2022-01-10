@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 
 class PostCommentsController extends Controller
 {
-	public function store(Post $post)
+	public function store(Post $post, CommentRequest $request)
 	{
-		request()->validate([
-			'body' => 'required',
-		]);
+		$request->validated();
 
 		$post->comments()->create([
 			'user_id' => request()->user()->id,

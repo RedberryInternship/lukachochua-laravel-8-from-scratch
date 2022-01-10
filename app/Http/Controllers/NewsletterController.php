@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SessionRequest;
 use App\Services\Newsletter;
 use Illuminate\Validation\ValidationException;
 
 class NewsletterController extends Controller
 {
-	public function __invoke(Newsletter $newsletter)
+	public function __invoke(Newsletter $newsletter, SessionRequest $request)
 	{
-		request()->validate(['email' => 'required|email']);
+		$request->validated();
 
 		try
 		{
@@ -22,7 +23,7 @@ class NewsletterController extends Controller
 			]);
 		}
 
-		return redirect('/')
+		return redirect()->route('home')
 			->with('success', 'You are now signed up for our newsletter!');
 	}
 }
