@@ -23,8 +23,6 @@ class AdminPostController extends Controller
 
 	public function store(PostRequest $request)
 	{
-		$post = new Post();
-
 		$attributes = $request->validated();
 
 		$attributes['user_id'] = auth()->id();
