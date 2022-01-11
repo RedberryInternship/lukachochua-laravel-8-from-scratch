@@ -4,7 +4,7 @@
 
             <h1 class="text-center font-bold text-xl">Register!</h1>
 
-            <form method="POST" action="/register" class="mt-10">
+            <form method="POST" action="{{ route('saveUser') }}" class="mt-10">
                 @csrf
 
                 <x-form.input name="name" />

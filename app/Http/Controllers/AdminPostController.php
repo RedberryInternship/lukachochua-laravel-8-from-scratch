@@ -40,9 +40,9 @@ class AdminPostController extends Controller
 		return view('admin.posts.edit', ['post' => $post, 'categories' => $categories]);
 	}
 
-	public function update(Post $post)
+	public function update(Post $post, PostRequest $request)
 	{
-		$attributes = $this->validatePost($post);
+		$attributes = $request->validated();
 
 		if (isset($attributes['thumbnail']))
 		{
