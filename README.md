@@ -102,6 +102,14 @@ Run Laravel's built-in development server by executing:
 ```sh
   php artisan serve
 ```
+
+Link storage to public in order to display images
+```sh
+  php artisan storage:link
+```
+
+To get access to the admin functionality open project file AppServiceProvider.php and change `username` to the intended one.
+
 #
 ## DrawSQL Database Diagram
 
